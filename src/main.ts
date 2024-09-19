@@ -1,14 +1,15 @@
 import './assets/scss/app.scss'
 import Dijkstra from "./algorithms/dijkstra"
-import Astar from "./algorithms/astar"
+import Astar from "./algorithms/biastar"
+import realAstar from "./algorithms/astar"
 import Canvas from "./canvas/canvas"
 
 // The default config
 let config = {
     speed: 30,
     size: { x: 20, y: 20 },
-    from: { x: 5, y: 5 },
-    to: { x: 14, y: 16 },
+    from: { x: 8, y: 13 },
+    to: { x: 13, y: 13 },
     walls: [
         { x: 10, y: 10 },
         { x: 10, y: 11 },
@@ -16,17 +17,18 @@ let config = {
         { x: 10, y: 13 },
         { x: 10, y: 14 },
         { x: 10, y: 15 },
-        { y: 10, x: 11 },
-        { y: 10, x: 12 },
-        { y: 10, x: 13 },
-        { y: 10, x: 14 },
-        { y: 10, x: 15 },
-    ]
+        { x: 10, y: 16 },
+        { x: 11, y: 16 },
+        { x: 12, y: 16 },
+        { x: 11, y: 10 },
+        { x: 12, y: 10 },
+    ]    
 }
 
 let dijkstra = new Canvas("#dijkstra", config, new Dijkstra)
-let aStar = new Canvas("#aStar", config, new Astar)
-
+let aStar = new Canvas("#biaStar", config, new Astar)
+let realaStar = new Canvas("#aStar", config, new realAstar)
+// let yoman = new Canvas("#")
 let configElements = {
     sizeX: <HTMLInputElement>document.getElementById('size-x'),
     sizeY: <HTMLInputElement>document.getElementById('size-x'),
@@ -66,15 +68,18 @@ const saveConfig = (e: MouseEvent) => {
 
     dijkstra.config = config
     aStar.config = config
+    realaStar.config = config
 
     aStar.reset()
     dijkstra.reset()
+    realaStar.reset()
 
 }
 
 const play = () => {
     dijkstra.solve()
     aStar.solve()
+    realaStar.solve()
 }
 
 const toggleConfig = () => {
